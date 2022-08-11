@@ -38,3 +38,16 @@ def bar_el(length, elast, area):
             k_temp[i][j] = sym.integrate(k_temp[i][j], (x, 0, length))
     k_st = area * elast * k_temp
     return k_st
+
+  # rotate the matrix in the plane
+  def rotate_bar_m(angle, length, elast, area):
+    ang_rad = angle * pi / 180
+    l = cos(ang_rad)
+    m = sin(ang_rad)
+    stiffnes = elast * area / length
+    k_mat = np.array([[l**2, l*m, -l**2, -l*m],
+                      [l*m, m**2, -l*m, -m**2],
+                     [-l**2, l*m, l**2, l*m],
+                     [-l*m, -m**2, l*m, m**2]])
+    k_r = stiffnes * k_mat
+    return k_r
